@@ -1,0 +1,63 @@
+{
+  "_readme": "Registry of the Shoot 1 carousels. Titles and slide counts here are cross-checked against the build-ready files; the slide copy itself is only ever read from the Markdown files in content/. A carousel with blocked_reason set cannot be built or exported from the app. To unblock one later: write its build-ready file, set source_file, and remove blocked_reason here. There is deliberately no button for this in the UI.",
+  "carousels": [
+    {
+      "id": 1,
+      "title": "Sized wrong, not just old",
+      "source_file": "cda-hvac-carousels-1-2-build-ready.md",
+      "expected_slides": 6
+    },
+    {
+      "id": 2,
+      "title": "Old furnace out. New furnace in. One day.",
+      "source_file": "cda-hvac-carousels-1-2-build-ready.md",
+      "expected_slides": 7,
+      "note": "Stills fallback for Reel 4 if there is no timelapse. Stills only — this tool does not accept video and will not stretch one clip to fake a timelapse."
+    },
+    {
+      "id": 3,
+      "title": "What commissioning actually is",
+      "source_file": null,
+      "blocked_reason": "Waiting on commissioning close-ups (charge test, airflow test). This carousel cannot be faked from install stills."
+    },
+    {
+      "id": 4,
+      "title": "No heat? Here's what we check first",
+      "source_file": "cda-hvac-carousels-4-5-build-ready.md",
+      "expected_slides": 7
+    },
+    {
+      "id": 5,
+      "title": "3 signs your furnace won't make it through winter",
+      "source_file": "cda-hvac-carousels-4-5-build-ready.md",
+      "expected_slides": 6
+    },
+    {
+      "id": 6,
+      "title": "Meet the crew",
+      "source_file": "cda-hvac-carousels-6-7-build-ready.md",
+      "expected_slides": 6,
+      "droppable_slides": [5],
+      "natural_moment_slides": [5],
+      "note": "Real crew photos from the shoot only. Slide 5: use a photo only if a natural, unstaged moment exists from Nov 2 — otherwise text slide or drop the slide."
+    },
+    {
+      "id": 7,
+      "title": "New construction: we build it, then we maintain it",
+      "source_file": "cda-hvac-carousels-6-7-build-ready.md",
+      "expected_slides": 6,
+      "locked_slides": [5],
+      "locked_note": "Slide 5 keeps the plan mention generic on purpose. Plan perks, frequency and timing are [VERIFY — Erika], so this slide's text cannot be edited or expanded here."
+    },
+    {
+      "id": 8,
+      "title": "Maintenance plan, explained",
+      "source_file": null,
+      "blocked_reason": "Waiting on Erika to confirm exactly what the maintenance plan includes and how often tune-ups happen. The same open question blocks Reel 7 and the Coeur d'Alene maintenance-plan page."
+    }
+  ],
+  "suggested_order": [[1, 2], [4, 5], [6, 7]],
+  "outline_file": "cda-hvac-shoot1-carousels.md",
+  "selects_map_files": ["cda-hvac-carousel-1-2-selects-map.md"],
+  "selects_checklist_file": "end-of-day-selects-checklist.md"
+}

@@ -1,0 +1,9 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# Local-only working data: photos, slot assignments, settings, exports.
+# Photos stay on this machine (v1: no cloud storage).
+/data/
+/exports/
