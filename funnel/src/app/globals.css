@@ -196,6 +196,16 @@ legend, .field > span, .step-title { font-weight: 700; font-size: 15px; margin-b
 .note, .hint { color: var(--muted); font-size: 15px; margin-top: 16px; }
 .band-dark .hint { color: rgba(255, 255, 255, 0.7); text-align: center; }
 
+.services { display: grid; gap: 10px; }
+.service {
+  display: grid; gap: 4px; height: 100%; padding: 18px; border-radius: var(--radius); text-decoration: none;
+  background: #fff; border: 1px solid var(--line); transition: border-color 0.12s;
+}
+.service:hover { border-color: var(--brand); }
+.service-title { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+.service-blurb { color: var(--muted); font-size: 15.5px; line-height: 1.4; }
+.service-go { margin-top: 6px; font-weight: 700; font-size: 14.5px; color: var(--brand); }
+
 .how { display: grid; gap: 14px; counter-reset: how; }
 .how li { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 6px; align-content: start; }
 .how-n {
@@ -286,7 +296,8 @@ legend, .field > span, .step-title { font-weight: 700; font-size: 15px; margin-b
 
 /* ── Wider screens ── */
 @media (min-width: 620px) {
-  .trust ul { grid-template-columns: repeat(3, auto); justify-content: space-between; }
+  .trust ul { grid-template-columns: repeat(2, auto); justify-content: space-between; }
+  .services { grid-template-columns: repeat(2, 1fr); }
   .how { grid-template-columns: repeat(3, 1fr); }
   .reviews { grid-template-columns: repeat(2, 1fr); }
   .gallery li { flex-basis: 320px; }
@@ -297,6 +308,8 @@ legend, .field > span, .step-title { font-weight: 700; font-size: 15px; margin-b
   .site-head { padding: 14px max(20px, calc((100vw - 1120px) / 2 + 20px)); }
   .hero-inner { grid-template-columns: 1.1fr 0.9fr; align-items: start; gap: 48px; padding: 64px 20px 72px; }
   .hero-cta { grid-template-columns: 1fr; max-width: 420px; }
+  .trust ul { grid-template-columns: repeat(4, auto); }
+  .services { grid-template-columns: repeat(3, 1fr); }
   .hero.has-photo .hero-shade {
     background: linear-gradient(90deg,
       color-mix(in srgb, var(--brand-deep) 90%, transparent) 0%,

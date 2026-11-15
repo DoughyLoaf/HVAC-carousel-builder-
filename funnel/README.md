@@ -43,6 +43,7 @@ off), hosting, and a real database and alert channel (see **Deploy**).
 | `reviews` | Real reviews only. Empty = the block is hidden. |
 | `copy` | Headline, buttons, form questions, FAQ, consent line. |
 | `towns` | Towns offered in the form. |
+| `services` | The "What we work on" cards, condensed from CDA's own service pages. |
 
 ### How facts are kept honest
 

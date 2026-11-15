@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { brand, copy, photos, reviews, towns } from "@content/site";
+import { brand, copy, photos, reviews, services, towns } from "@content/site";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { CallLink } from "@/components/CallLink";
 import { IntentLink } from "@/components/IntentLink";
@@ -25,7 +25,9 @@ export default function Home() {
   const area = publicFact("funnel.targetArea", mode);
   const hours = publicFact("business.hours", mode);
   const website = publicFact("business.website", mode);
-  const trust = (["claim.licensed", "claim.experience", "claim.emergency"] as const)
+  const servicesFact = publicFact("services.list", mode);
+  const positioning = publicFact("claim.positioning", mode);
+  const trust = (["claim.local", "claim.licensed", "claim.experience", "claim.emergency"] as const)
     .map((id) => publicFact(id, mode))
     .filter((f) => f !== null);
 
@@ -108,7 +110,27 @@ export default function Home() {
           </section>
         )}
 
-        <section className="band">
+        {servicesFact && (
+          <section className="band">
+            <div className="wrap">
+              <h2>{copy.services.title}{servicesFact.unverified && <Unverified />}</h2>
+              {positioning && <p className="lede">{positioning.value}{positioning.unverified && <Unverified />}</p>}
+              <ul className="services">
+                {services.map((sv) => (
+                  <li key={sv.title}>
+                    <IntentLink intent={sv.intent} className="service">
+                      <span className="service-title">{sv.title}</span>
+                      <span className="service-blurb">{sv.blurb}</span>
+                      <span className="service-go" aria-hidden="true">Request →</span>
+                    </IntentLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        <section className={servicesFact ? "band band-tint" : "band"}>
           <div className="wrap">
             <h2>How it works</h2>
             <ol className="how">
