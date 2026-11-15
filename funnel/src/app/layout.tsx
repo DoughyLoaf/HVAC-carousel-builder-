@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { brand, copy } from "@content/site";
 import { siteMode } from "@/lib/launch";
+import "@fontsource-variable/assistant/wght.css";
 import "./globals.css";
 
 export function generateMetadata(): Metadata {
@@ -17,7 +18,7 @@ export function generateMetadata(): Metadata {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: brand.colors.brandDeep,
+  themeColor: brand.colors.brand,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

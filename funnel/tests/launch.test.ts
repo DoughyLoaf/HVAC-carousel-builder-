@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { ledger, photos, type LedgerItem, type PhotoSlot } from "@content/site";
+import { ledger, photos, towns, type LedgerItem, type PhotoSlot } from "@content/site";
 import { launchBlockers, photoUsable, publicFact, siteMode, telHref } from "@/lib/launch";
 
 function publicDirWith(files: string[]): string {
@@ -49,7 +49,7 @@ describe("launch gate", () => {
 
   it("the shipped content is honestly in preview", () => {
     const ids = launchBlockers().map((b) => b.id);
-    expect(ids).toEqual(expect.arrayContaining(["business.phone", "brand.palette", "photos.source", "photo.hero", "ai.pageCopy"]));
+    expect(ids.sort()).toEqual(["ai.pageCopy", "photo.hero", "photos.source", "process.callback"]);
     expect(siteMode({ SITE_MODE: "live" } as never)).toBe("preview");
   });
 });
@@ -85,11 +85,27 @@ describe("content/site.ts", () => {
       ids.add(i.id);
     }
   });
-  it("nothing about financing, reviews or ownership is public", () => {
-    for (const id of ["financing.payzer", "reviews.yelp", "business.ownership"]) {
+  it("nothing about financing, reviews, ratings, guarantees or ownership is public", () => {
+    for (const id of ["financing.payzer", "reviews.site", "claim.fiveStar", "claim.guarantee", "business.ownership", "contact.email"]) {
       expect(ledger.find((i) => i.id === id)?.audience).toBe("internal");
     }
   });
+  it("CDA's own claims and prices stay hidden from the live page until someone verifies them", () => {
+    for (const id of ["claim.licensed", "claim.experience", "claim.emergency", "claim.local", "price.diagnostic"]) {
+      expect(publicFact(id, "live"), id).toBeNull();
+      expect(publicFact(id, "preview"), id).toMatchObject({ unverified: true });
+    }
+    // What was read directly on CDA's site shows in live mode.
+    for (const id of ["business.phone", "services.list", "guide.repairOrReplace", "business.website"]) {
+      expect(publicFact(id, "live"), id).toMatchObject({ unverified: false });
+    }
+  });
+
+  it("the form offers each town once", () => {
+    expect(new Set(towns).size).toBe(towns.length);
+    expect(towns).toHaveLength(19);
+  });
+
   it("photo slots have unique ids", () => {
     expect(new Set(photos.map((p) => p.id)).size).toBe(photos.length);
   });

@@ -19,7 +19,7 @@ export interface LeadFormCopy {
 
 interface Props {
   copy: LeadFormCopy;
-  towns: string[];
+  townGroups: { county: string; towns: string[] }[];
   phone: { display: string; tel: string } | null;
   consent: string;
   callLabel: string;
@@ -37,7 +37,7 @@ function formatPhoneTyping(raw: string): string {
   return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
 }
 
-export function LeadForm({ copy, towns, phone, consent, callLabel }: Props) {
+export function LeadForm({ copy, townGroups, phone, consent, callLabel }: Props) {
   const uid = useId();
   const [step, setStep] = useState<1 | 2>(1);
   const [phase, setPhase] = useState<Phase>("editing");
@@ -199,7 +199,11 @@ export function LeadForm({ copy, towns, phone, consent, callLabel }: Props) {
               <span>Where’s the home?</span>
               <select value={v.town} onChange={(e) => set("town", e.target.value)}>
                 <option value="">Choose a town</option>
-                {towns.map((t) => <option key={t} value={t}>{t}</option>)}
+                {townGroups.map((g) => (
+                  <optgroup key={g.county} label={g.county}>
+                    {g.towns.map((t) => <option key={t} value={t}>{t}</option>)}
+                  </optgroup>
+                ))}
                 <option value={OTHER_TOWN}>{OTHER_TOWN}</option>
               </select>
             </label>

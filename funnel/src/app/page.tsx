@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { brand, copy, photos, reviews, services, towns } from "@content/site";
+import { brand, copy, photos, reviews, services, townGroups } from "@content/site";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import { CallLink } from "@/components/CallLink";
 import { IntentLink } from "@/components/IntentLink";
 import { LeadForm } from "@/components/LeadForm";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { RepairOrReplace } from "@/components/RepairOrReplace";
 import { StickyBar } from "@/components/StickyBar";
 import { launchBlockers, photoUsable, publicFact, siteMode, telHref } from "@/lib/launch";
 
@@ -23,9 +24,15 @@ export default function Home() {
   const phone = phoneFact && tel ? { display: phoneFact.value, tel } : null;
 
   const area = publicFact("funnel.targetArea", mode);
-  const hours = publicFact("business.hours", mode);
   const website = publicFact("business.website", mode);
   const servicesFact = publicFact("services.list", mode);
+  const guideFact = publicFact("guide.repairOrReplace", mode);
+  const faq = copy.faq.map((f) => {
+    const fact = f.factId ? publicFact(f.factId, mode) : null;
+    return fact && f.aWithFact
+      ? { q: f.q, a: f.aWithFact.replace("{fee}", fact.value), unverified: fact.unverified }
+      : { q: f.q, a: f.a, unverified: false };
+  });
   const positioning = publicFact("claim.positioning", mode);
   const trust = (["claim.local", "claim.licensed", "claim.experience", "claim.emergency"] as const)
     .map((id) => publicFact(id, mode))
@@ -54,7 +61,14 @@ export default function Home() {
 
       <header className="site-head">
         <a href="#top" className="wordmark" aria-label={brand.wordmark}>
-          {brand.logo ? <Image src={brand.logo} alt={brand.wordmark} width={180} height={44} priority /> : brand.wordmark}
+          {brand.logo ? (
+            <Image src={brand.logo} alt={brand.wordmark} width={180} height={44} priority />
+          ) : (
+            <>
+              {brand.mark && <Image src={brand.mark} alt="" width={36} height={36} priority className="wordmark-mark" />}
+              <span>{brand.wordmark}</span>
+            </>
+          )}
         </a>
         {phone && (
           <CallLink tel={phone.tel} placement="header" className="head-call">
@@ -92,7 +106,7 @@ export default function Home() {
               )}
             </div>
             <div className="hero-form" id="request">
-              <LeadForm copy={copy.form} towns={towns} phone={phone} consent={copy.form.consent} callLabel={copy.cta.call} />
+              <LeadForm copy={copy.form} townGroups={townGroups} phone={phone} consent={copy.form.consent} callLabel={copy.cta.call} />
               <noscript>
                 <p className="noscript">This form needs JavaScript.{phone ? ` You can also call ${phone.display}.` : ""}</p>
               </noscript>
@@ -132,7 +146,7 @@ export default function Home() {
 
         <section className={servicesFact ? "band band-tint" : "band"}>
           <div className="wrap">
-            <h2>How it works</h2>
+            <h2>{copy.stepsTitle}</h2>
             <ol className="how">
               {copy.steps.map((s, i) => (
                 <li key={s.title}>
@@ -144,6 +158,21 @@ export default function Home() {
             </ol>
           </div>
         </section>
+
+        {guideFact && (
+          <section className="band">
+            <div className="wrap narrow">
+              <h2>{copy.repairOrReplace.title}{guideFact.unverified && <Unverified />}</h2>
+              <p className="lede">{copy.repairOrReplace.lede}</p>
+              <RepairOrReplace
+                repair={copy.repairOrReplace.repair}
+                replace={copy.repairOrReplace.replace}
+                serviceLabel={copy.cta.service}
+                estimateLabel={copy.cta.estimate}
+              />
+            </div>
+          </section>
+        )}
 
         {(beforeAfterReady || preview) && (
           <section className="band band-dark">
@@ -204,9 +233,16 @@ export default function Home() {
           <div className="wrap">
             <h2>Where we work</h2>
             {area && <p className="lede">{area.value}</p>}
-            <ul className="towns">
-              {towns.map((t) => <li key={t}>{t}</li>)}
-            </ul>
+            <div className="town-groups">
+              {townGroups.map((g) => (
+                <div key={g.county}>
+                  <h3>{g.county}</h3>
+                  <ul className="towns">
+                    {g.towns.map((t) => <li key={t}>{t}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
             <p className="note">Not sure you’re in range? Send a request or call, and we’ll tell you straight.</p>
           </div>
         </section>
@@ -215,10 +251,10 @@ export default function Home() {
           <div className="wrap narrow">
             <h2>Common questions</h2>
             <div className="faq">
-              {copy.faq.map((f) => (
+              {faq.map((f) => (
                 <details key={f.q}>
                   <summary>{f.q}</summary>
-                  <p>{f.a}</p>
+                  <p>{f.a}{f.unverified && <Unverified />}</p>
                 </details>
               ))}
             </div>
@@ -246,7 +282,6 @@ export default function Home() {
         <div className="wrap">
           <p className="foot-name">{brand.wordmark}</p>
           {phone && <p><CallLink tel={phone.tel} placement="footer">{phone.display}</CallLink></p>}
-          {hours && <p>{hours.value}{hours.unverified && <Unverified />}</p>}
           {website && (
             <p>
               Looking for everything else CDA does?{" "}

@@ -23,15 +23,24 @@ list. Today that list is:
 
 | Blocks launch | What settles it |
 |---|---|
-| Phone number | CDA confirms `(208) 916-1956` is the number to ring. It comes from public directory listings only. |
-| Homepage copy | Every word on the page is AI-drafted. Cost2shoot and CDA approve or rewrite it. |
-| Brand colours and logo | The palette is a placeholder. CDA's logo and colours go into `content/site.ts`. |
+| Homepage copy | The headline, form and most answers are AI-drafted (the services, the repair-or-replace signals and the three steps are CDA's own wording). Cost2shoot and CDA approve or rewrite it. |
 | Photos + hero photo | The page has photo slots and no photos. The `CDA EDIT` folder was not reachable from where this was built. |
 | What happens after a request | CDA confirms who receives lead alerts and that they will be worked. |
 
-Also not done, and not blocking: financing (no Payzer or WEX link to CDA was
-found, so the page says nothing about financing), reviews (block built, switched
-off), hosting, and a real database and alert channel (see **Deploy**).
+Settled by reading cdaheating.com directly: the phone number, the towns in the
+form, the services, the repair-or-replace guide, and the brand (blue `#2a7ab5`,
+red `#e02424`, the Assistant typeface, the flame mark).
+
+CDA's own claims — licensed in Idaho and Washington, 20+ years, 24/7 emergency
+service, locally owned, the $220 diagnostic fee — are on the page in preview
+with an "unverified" tag, and drop out in live mode until someone confirms each
+one in `content/site.ts`. Their guarantee, "5 Star Rated" line and unnamed
+testimonials are recorded and kept off the page.
+
+Also not done, and not blocking: financing (nothing on CDA's site or elsewhere
+mentions financing, Payzer or WEX, so the page says nothing about it), reviews
+(block built, switched off), hosting, and a real database and alert channel
+(see **Deploy**).
 
 ## The one file to edit: `content/site.ts`
 
@@ -42,8 +51,8 @@ off), hosting, and a real database and alert channel (see **Deploy**).
 | `photos` | Photo slots: file name, alt text, inside-a-home flag, homeowner permission. |
 | `reviews` | Real reviews only. Empty = the block is hidden. |
 | `copy` | Headline, buttons, form questions, FAQ, consent line. |
-| `towns` | Towns offered in the form. |
-| `services` | The "What we work on" cards, condensed from CDA's own service pages. |
+| `townGroups` | Towns offered in the form, by county. |
+| `services` | The service cards, in CDA's own words. |
 
 ### How facts are kept honest
 
