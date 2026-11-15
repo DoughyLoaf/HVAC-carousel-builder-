@@ -11,6 +11,12 @@ Instagram carousels, the same way every time:
 It is **export only**. It does not post, schedule or send anything, it does not
 write or suggest copy, and it does not pick photos.
 
+> **Also in this repository:** [`funnel/`](funnel/README.md) — the CDA Heating &
+> Cooling conversion funnel and private lead workspace. It is a separate app
+> with its own `package.json` and its own deploy; nothing in the carousel
+> builder depends on it, and the carousel builder still has no CRM or funnel
+> connection.
+
 ## Run it
 
 Needs Node.js 20 or newer.

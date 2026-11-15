@@ -1,0 +1,10 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+
+# Local-only development database (embedded Postgres). Real leads never live here.
+/data/

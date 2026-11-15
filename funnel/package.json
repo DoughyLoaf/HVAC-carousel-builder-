@@ -1,0 +1,33 @@
+{
+  "name": "cda-heating-funnel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CDA Heating & Cooling — conversion funnel homepage and private lead-reporting workspace (Cost2shoot). Separate from the carousel builder at the repository root.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node scripts/migrate.mjs",
+    "photos:import": "node scripts/import-photos.mjs",
+    "launch:check": "node scripts/launch-check.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "next": "^16.4.6",
+    "pg": "^8.13.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite-socket": "^0.2.19",
+    "@types/node": "^22.20.5",
+    "@types/pg": "^8.11.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  }
+}
