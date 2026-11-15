@@ -40,6 +40,7 @@ export interface LedgerItem {
 
 const RESEARCH_DATE = "2026-11-15";
 const WEB_SEARCH = "Web search results read on 2026-11-15. CDA's own website could not be opened from the build environment, so this was not checked against it.";
+const OWN_SITE = "CDA's own website (cdaheating.com), as read through a search engine on 2026-11-15 — the pages themselves could not be opened from the build environment, and nobody at CDA has confirmed it.";
 
 export const ledger: LedgerItem[] = [
   // ───────────────────────── Verified ─────────────────────────
@@ -83,11 +84,11 @@ export const ledger: LedgerItem[] = [
     class: "reported",
     label: "Phone number",
     value: "(208) 916-1956",
-    source: `Listed for CDA Heating & Cooling in several public directory results. ${WEB_SEARCH}`,
+    source: `Shown on cdaheating.com's homepage, town pages and repair pages, and in Yelp, MapQuest and Apple Maps listings. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "public",
     requiredForLaunch: true,
-    toVerify: "Confirm with CDA that this is the number the funnel should ring, and whether a tracking number should be used instead.",
+    toVerify: "Open cdaheating.com and check the number, then confirm with CDA that the funnel should ring it (and not a separate tracking number).",
   },
   {
     id: "business.address",
@@ -114,7 +115,7 @@ export const ledger: LedgerItem[] = [
     class: "reported",
     label: "After-hours / emergency service",
     value: "24/7 emergency service",
-    source: `Wording seen on pages that appear to be a preview copy of CDA's site. ${WEB_SEARCH}`,
+    source: `Stated on cdaheating.com's homepage and its Post Falls furnace-repair page. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "public",
     toVerify: "Confirm with CDA whether they really answer and dispatch around the clock, and which number to call.",
@@ -124,7 +125,7 @@ export const ledger: LedgerItem[] = [
     class: "reported",
     label: "Licensing",
     value: "Licensed, bonded and insured in Idaho and Washington",
-    source: `CDA's own pages as summarised in search results; BuildZoom lists a Kootenai County contractor licence at the Hauser address. No state licence number was found. ${WEB_SEARCH}`,
+    source: `Stated on a cdaheating.com town page; BuildZoom lists a Kootenai County contractor licence at the Hauser address. No state licence number was found. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "public",
     toVerify: "Get the Idaho and Washington licence numbers from CDA and check them against the state lookups before showing this.",
@@ -164,10 +165,10 @@ export const ledger: LedgerItem[] = [
     class: "reported",
     label: "Existing website",
     value: "https://www.cdaheating.com/",
-    source: `Search results show cdaheating.com, cdaheating.net and a pages.dev preview copy. Which one is the live, official site was not confirmed. ${WEB_SEARCH}`,
+    source: `cdaheating.com is the site search engines index, with a page per town and per service. cdaheating.net appears only as the domain of CDA's contact email, and a pages.dev address holds what looks like a build copy of the same site. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "public",
-    toVerify: "Confirm the official domain with CDA. The funnel links to it in the footer once verified; it does not replace it.",
+    toVerify: "Confirm with CDA that cdaheating.com is the address to link to. The funnel links to it in the footer once verified; it does not replace it.",
   },
   {
     id: "contact.erika",
@@ -180,13 +181,34 @@ export const ledger: LedgerItem[] = [
     toVerify: "Confirm Erika is the right person to sign off the items on this page.",
   },
 
+  {
+    id: "price.diagnostic",
+    class: "reported",
+    label: "Diagnostic fee",
+    value: "$220 diagnostic at the start of every visit",
+    source: `Stated on cdaheating.com's Spokane Valley and Post Falls pages. ${OWN_SITE}`,
+    checkedOn: RESEARCH_DATE,
+    audience: "internal",
+    toVerify: "Kept off the funnel on purpose — the page states no prices. If CDA wants it shown, confirm the current figure and wording first.",
+  },
+  {
+    id: "services.list",
+    class: "reported",
+    label: "Services on CDA's site",
+    value: "Furnace repair, AC repair, heat pumps, ductless mini-splits, maintenance and tune-ups, thermostats, indoor air quality and ductwork. No page for furnace or system replacement was found.",
+    source: OWN_SITE,
+    checkedOn: RESEARCH_DATE,
+    audience: "internal",
+    toVerify: "Confirm with CDA that they want replacement-estimate requests, since their own site does not have a page for it.",
+  },
+
   // ───────────────────────── AI-generated summaries ─────────────────────────
   {
     id: "ai.webPresence",
     class: "ai_summary",
     label: "Summary of CDA's public web presence",
     value:
-      "CDA Heating & Cooling appears in Apple Maps, Yelp, MapQuest, Yahoo Local and BuildZoom at a Hauser, Idaho address, with (208) 916-1956 as the most consistent phone number. Its own pages describe a locally owned, owner-operated company serving Spokane County and North Idaho. No financing partner, Payzer or WEX link, or sizeable review count was found.",
+      "CDA Heating & Cooling appears in Apple Maps, Yelp, MapQuest, Yahoo Local and BuildZoom at a Hauser, Idaho address, with (208) 916-1956 as the phone number everywhere, including on its own site. cdaheating.com describes a locally owned, owner-operated company serving Spokane County and North Idaho, with a page per town and per repair service, 24/7 emergency service and a $220 diagnostic fee. Nothing on the site or elsewhere mentions financing, Payzer or WEX, a maintenance plan's terms, or a sizeable review count, and the site has no replacement page.",
     source: "Written by an AI assistant from web search result summaries, not from the pages themselves. Treat every detail as a lead to check, not a fact.",
     checkedOn: RESEARCH_DATE,
     audience: "internal",
@@ -228,13 +250,13 @@ export const ledger: LedgerItem[] = [
   },
   {
     id: "area.towns",
-    class: "assumption",
+    class: "reported",
     label: "Towns offered in the form",
     value: "Coeur d’Alene, Post Falls, Hayden, Rathdrum, Liberty Lake, Spokane Valley, Spokane",
-    source: "Chosen from the target area in the brief. The form never tells anyone “we serve your town” — it only asks where the home is. Edit `towns` at the bottom of content/site.ts.",
+    source: `Each of these towns has its own service page on cdaheating.com, which describes the service area as Spokane County plus Kootenai, Bonner and Shoshone counties (it also has pages for Cheney, Ponderay, Clark Fork and Wallace, left off the form because they fall outside this funnel's target area). The form never tells anyone “we serve your town” — it only asks where the home is. Edit \`towns\` at the bottom of content/site.ts. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "internal",
-    toVerify: "Ask CDA for the list of towns and ZIP codes they actually dispatch to.",
+    toVerify: "Ask CDA whether they want every one of these towns offered, and whether any should be added.",
   },
   {
     id: "process.callback",
@@ -273,7 +295,7 @@ export const ledger: LedgerItem[] = [
     class: "opportunity",
     label: "Financing (Payzer / WEX)",
     value: "No public link between CDA and Payzer or WEX was found, so the page says nothing about financing. If CDA does use Payzer (now part of WEX), add its application link as a third call to action for replacement estimates.",
-    source: `Nothing about financing turned up for CDA. ${WEB_SEARCH}`,
+    source: `Nothing about financing turned up on cdaheating.com or anywhere else. ${OWN_SITE}`,
     checkedOn: RESEARCH_DATE,
     audience: "internal",
     toVerify: "Ask CDA whether they offer financing, through whom, and for the customer-facing application link and any required disclosure wording.",
